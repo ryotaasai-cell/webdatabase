@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>商品管理アプリ</title>
+</head>
+    <style>
+        body {
+           
+            margin: 20px;
+            background-color: rgb(140, 218, 240);
+        }
+
+        header, section, form {
+            margin-bottom: 20px;
+        }
+        h1 {
+            text-align: center;
+            font: size 150px;;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+            font: size 150px;;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            font-size: large;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        ul, dl {
+
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+            font-size: large;
+        
+            color: #555;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        dt {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        dd {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        form input {
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        form button {
+            padding: 12px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="mb-4">今日のお買い物リスト</h1>
+    <header>
+        <h2>商品データ</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>商品名</th>
+                    <th>値段</th>
+                    <th>個数</th>
+                    <th>説明</th>
+                    <th>カテゴリーID</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (const product of productItems) { %>
+                    <tr>
+                        <td><%= product.商品名 %></td>
+                        <td><%= product.値段 %> 円</td>
+                        <td><%= product.在庫 %> 個</td>
+                        <td><%= product.説明 %></td>
+                        <td><%= product.カテゴリーid %></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </header>
+    
+    
+    <section>
+        <h2>カテゴリーデータ</h2>
+        <ul>
+            <% for (const category of categoryItems) { %>
+                <li>
+                    <span class="category-label">カテゴリーID:</span>
+                    <span class="category-value"><%= category.category_id %></span>
+                    <span class="category-label">カテゴリー名:</span>
+                    <span class="category-value"><%= category.category_name %></span>
+                </li>
+            <% } %>
+        </ul>
+    </section>
+    
+    <section>
+        <h2>カテゴリー追加</h2>
+        <form action="/addCategory" method="post">
+            <label for="categoryName">カテゴリー名：</label>
+            <input type="text" id="categoryName" name="category_name" required>
+            <button type="submit">追加</button>
+        </form>
+    </section>
+    <section>
+
+        <h2>個数更新</h2>
+        <form action="/updateStock" method="post">
+            <label for="productNameUpdate">商品名：</label>
+            <input type="text" id="productNameUpdate" name="商品名" required>
+            <label for="newStock">新しい個数：</label>
+            <input type="number" id="newStock" name="新しい在庫" required>
+            <button type="submit">更新</button>
+        </form>
+    </section>
+
+
+    <section>
+        <h2>商品追加</h2>
+        <form action="/addProduct" method="post">
+            <label for="productName">商品名：</label>
+            <input type="text" id="productName" name="商品名" required>
+            <label for="productPrice">値段：</label>
+            <input type="number" id="productPrice" name="値段" required>
+            <label for="productStock">個数：</label>
+            <input type="number" id="productStock" name="在庫" required>
+            <label for="productDescription">説明：</label>
+            <input type="text" id="productDescription" name="説明" required>
+            <label for="categoryId">カテゴリーID：</label>
+            <input type="number" id="categoryId" name="カテゴリーid" required>
+            <button type="submit">追加</button>
+        </form>
+    </section>
+
+
+    <section>
+        <h2>商品を削除</h2>
+    <form action="/deleteProduct" method="post">
+        <label for="商品名">商品名:</label>
+        <input type="text" name="商品名">
+        <label for="カテゴリーid">カテゴリーID:</label>
+        <input type="text" name="カテゴリーid">
+        <button type="submit">削除</button>
+    </section>
+    
+                
+
+</html>
